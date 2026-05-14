@@ -12,40 +12,40 @@ class WarningSignsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<_WarningSign> warningSigns = [
       _WarningSign(
-        image: 'assets/new_lump.png',
-        title: 'New Lump',
+        icon: Remix.search_eye_line,
+        title: 'नई गांठ',
         description:
-            'A new lump or mass in the breast or underarm area that feels different from surrounding tissue.',
+            'स्तन या बगल के हिस्से में नई गांठ या कठोर भाग महसूस होना, जो आसपास के हिस्से से अलग लगे।',
       ),
       _WarningSign(
-        image: 'assets/skin_dimpling.png',
-        title: 'Skin Dimpling',
+        icon: Remix.body_scan_line,
+        title: 'त्वचा में गड्ढे',
         description:
-            'Dimpling, puckering, or changes in the skin texture that looks like an orange peel.',
+            'त्वचा में गड्ढे पड़ना, सिकुड़न आना या त्वचा का संतरे के छिलके जैसी दिखना।',
       ),
       _WarningSign(
-        image: 'assets/nipple_changes.png',
-        title: 'Nipple Changes',
+        icon: Remix.focus_3_line,
+        title: 'निप्पल में बदलाव',
         description:
-            'Nipple turning inward, changes in position, or becoming inverted when it wasn\'t before.',
+            'निप्पल का अंदर की ओर मुड़ना, स्थिति बदलना या पहले से अलग दिखाई देना।',
       ),
       _WarningSign(
-        image: 'assets/nipple_discharge.png',
-        title: 'Nipple Discharge',
+        icon: Remix.drop_line,
+        title: 'निप्पल से स्राव',
         description:
-            'Unusual discharge from the nipple, especially if bloody or clear fluid.',
+            'निप्पल से असामान्य तरल निकलना, खासकर खून जैसा या साफ पानी जैसा स्राव।',
       ),
       _WarningSign(
-        image: 'assets/swelling.png',
-        title: 'Swelling',
+        icon: Remix.first_aid_kit_line,
+        title: 'सूजन',
         description:
-            'Swelling of all or part of the breast, even without a distinct lump.',
+            'पूरे स्तन या स्तन के किसी हिस्से में सूजन होना, भले ही कोई साफ गांठ महसूस न हो।',
       ),
       _WarningSign(
-        image: 'assets/redness.png',
-        title: 'Redness or Sores',
+        icon: Remix.alarm_warning_line,
+        title: 'लालिमा या घाव',
         description:
-            'Redness, scaliness, or thickening of the nipple or breast skin.',
+            'निप्पल या स्तन की त्वचा पर लालिमा, पपड़ी, मोटापन या घाव जैसा बदलाव दिखना।',
       ),
     ];
 
@@ -58,13 +58,13 @@ class WarningSignsScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Warning Signs'),
+        title: const Text('चेतावनी संकेत'),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
           child: PrimaryButton(
-            text: 'See Normal vs Abnormal',
+            text: 'सामान्य और असामान्य देखें',
             onPressed: () {
               Navigator.push(
                 context,
@@ -84,12 +84,12 @@ class WarningSignsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'What to Look For',
+                'किन बातों पर ध्यान दें',
                 style: Theme.of(context).textTheme.displaySmall,
               ),
               const SizedBox(height: 12),
               Text(
-                'Be aware of these potential warning signs. If you notice any of these, consult your doctor immediately.',
+                'इन संभावित चेतावनी संकेतों पर ध्यान दें। अगर आपको इनमें से कोई भी बदलाव दिखे, तो तुरंत डॉक्टर से सलाह लें।',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: AppTheme.textSecondary,
                       height: 1.5,
@@ -104,7 +104,8 @@ class WarningSignsScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final sign = warningSigns[index];
                   return WarningSignCard(
-                    image: sign.image,
+                    key: ValueKey(sign.title),
+                    icon: sign.icon,
                     title: sign.title,
                     description: sign.description,
                   );
@@ -113,7 +114,7 @@ class WarningSignsScreen extends StatelessWidget {
               const SizedBox(height: 28),
               const InfoBanner(
                 message:
-                    'Remember: Many breast changes are not cancer. However, it\'s important to have any concerns checked by a healthcare professional.',
+                    'याद रखें: स्तन में होने वाले कई बदलाव कैंसर नहीं होते। फिर भी, किसी भी चिंता या बदलाव की जांच स्वास्थ्य विशेषज्ञ से करवाना जरूरी है।',
                 icon: Remix.information_line,
               ),
               const SizedBox(height: 24),
@@ -126,13 +127,89 @@ class WarningSignsScreen extends StatelessWidget {
 }
 
 class _WarningSign {
-  final String image;
+  final IconData icon;
   final String title;
   final String description;
 
-  _WarningSign({
-    required this.image,
+  const _WarningSign({
+    required this.icon,
     required this.title,
     required this.description,
   });
+}
+
+class WarningSignCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String description;
+
+  const WarningSignCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 58,
+            width: 58,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFEAF4),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(
+              icon,
+              color: const Color(0xFFE91E63),
+              size: 30,
+            ),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Color(0xFF2D2D2D),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  description,
+                  style: const TextStyle(
+                    color: Color(0xFF6A6A6A),
+                    fontSize: 14,
+                    height: 1.45,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -32,11 +32,8 @@ class NormalVsAbnormalScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Understanding what is normal for your body helps you identify changes that need attention.',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppTheme.textSecondary,
-                      height: 1.5,
-                    ),
+                'It is important to understand the normal changes in your body so that you can identify the changes that need attention.',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppTheme.textSecondary, height: 1.5),
               ),
               const SizedBox(height: 28),
               // Side-by-side comparison
@@ -46,15 +43,15 @@ class NormalVsAbnormalScreen extends StatelessWidget {
                   Expanded(
                     child: _buildSection(
                       context: context,
-                      title: 'Normal',
+                      title: 'सामान्य',
                       icon: Remix.checkbox_circle_line,
                       color: AppTheme.successGreen,
                       items: [
-                        'Slight size difference between breasts',
-                        'Tenderness before your period',
-                        'Lumpy or rope-like texture',
-                        'Discharge during pregnancy',
-                        'Size changes during cycle',
+                        'दोनों स्तनों के आकार में हल्का अंतर',
+                        'पीरियड से पहले हल्की संवेदनशीलता',
+                        'हल्की गांठदार या रस्सी जैसी बनावट',
+                        'गर्भावस्था के दौरान स्राव',
+                        'मासिक चक्र के दौरान आकार में बदलाव',
                       ],
                     ),
                   ),
@@ -62,16 +59,16 @@ class NormalVsAbnormalScreen extends StatelessWidget {
                   Expanded(
                     child: _buildSection(
                       context: context,
-                      title: 'See a Doctor',
+                      title: 'डॉक्टर से मिलें',
                       icon: Remix.stethoscope_line,
                       color: AppTheme.darkPink,
                       items: [
-                        'New hard or painless lump',
-                        'Skin dimpling or puckering',
-                        'Nipple turning inward',
-                        'Bloody nipple discharge',
-                        'Persistent redness or rash',
-                        'Unexplained shape changes',
+                        'नई कठोर या बिना दर्द वाली गांठ',
+                        'त्वचा में गड्ढे या सिकुड़न',
+                        'निप्पल का अंदर की ओर मुड़ना',
+                        'निप्पल से खून जैसा स्राव',
+                        'लगातार लालिमा या दाने',
+                        'बिना कारण आकार में बदलाव',
                       ],
                     ),
                   ),

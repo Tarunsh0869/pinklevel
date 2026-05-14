@@ -10,7 +10,7 @@ class DisclaimerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar( 
         backgroundColor: AppTheme.primaryPink,
         foregroundColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -18,7 +18,7 @@ class DisclaimerScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Safety Disclaimer'),
+        title: const Text('सुरक्षा अस्वीकरण'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -27,13 +27,13 @@ class DisclaimerScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Important Disclaimer',
+                'महत्वपूर्ण अस्वीकरण',
                 style: Theme.of(context).textTheme.displaySmall,
               ),
               const SizedBox(height: 20),
               const InfoBanner(
                 message:
-                    'This app is for educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment.',
+                    'यह ऐप केवल शैक्षिक उद्देश्य के लिए है। यह डॉक्टर की सलाह, जांच, निदान या उपचार का विकल्प नहीं है।',
                 icon: Remix.error_warning_line,
               ),
               const SizedBox(height: 24),
@@ -42,16 +42,16 @@ class DisclaimerScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Please Note:',
+                      'कृपया ध्यान दें:',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 16),
                     ...[ 
-                      'Always consult a qualified healthcare professional for medical advice.',
-                      'Self-examination does not replace regular clinical breast exams or mammograms.',
-                      'If you notice any changes, seek medical attention promptly.',
-                      'Early detection through professional screening saves lives.',
-                      'This app does not provide diagnosis or treatment recommendations.',
+                      'किसी भी मेडिकल सलाह के लिए हमेशा योग्य स्वास्थ्य विशेषज्ञ या डॉक्टर से संपर्क करें।',
+                      'स्वयं जांच, नियमित क्लिनिकल ब्रेस्ट एग्जाम या मैमोग्राम का विकल्प नहीं है।',
+                      'अगर आपको कोई बदलाव दिखाई दे, तो जल्द से जल्द डॉक्टर से जांच करवाएं।',
+                      'समय पर जांच और शुरुआती पहचान जीवन बचाने में मदद कर सकती है।',
+                      'यह ऐप किसी भी प्रकार का निदान या उपचार की सलाह नहीं देता।',
                     ].map(
                       (text) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
@@ -76,7 +76,7 @@ class DisclaimerScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                text: 'I Understand',
+                text: 'मैं समझ गया/गई',
                 icon: Remix.checkbox_circle_line,
                 onPressed: () => Navigator.pop(context),
               ),

@@ -11,12 +11,12 @@ class AssessmentScreen extends StatefulWidget {
 
 class _AssessmentScreenState extends State<AssessmentScreen> {
   static const _questions = [
-    'Do you notice any new lump or thickening in your breast or underarm?',
-    'Have you noticed any change in the size or shape of your breast?',
-    'Is there any skin dimpling, puckering, or redness on your breast?',
-    'Do you have any nipple discharge (other than breast milk)?',
-    'Have you noticed any nipple inversion or change in nipple direction?',
-    'Do you feel any persistent pain in your breast or nipple area?',
+    'क्या आपको स्तन या बगल में कोई नई गांठ या मोटापन महसूस हो रहा है?',
+    'क्या आपने अपने स्तन के आकार या बनावट में कोई बदलाव देखा है?',
+    'क्या स्तन की त्वचा पर गड्ढे, सिकुड़न या लालिमा दिखाई दे रही है?',
+    'क्या निप्पल से कोई असामान्य स्राव हो रहा है?',
+    'क्या निप्पल अंदर की ओर मुड़ रहा है या उसकी दिशा में बदलाव दिख रहा है?',
+    'क्या स्तन या निप्पल के हिस्से में लगातार दर्द महसूस हो रहा है?',
   ];
 
   final Map<int, bool?> _answers = {};
@@ -113,7 +113,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
               minimumSize: const Size(double.infinity, 52),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             ),
-            child: const Text('Submit', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            child: const Text('सबमिट करें', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
           ),
         ),
       ],
@@ -138,15 +138,15 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
           ),
           const SizedBox(height: 24),
           Text(
-            hasYes ? 'Please Consult a Doctor' : 'No Concerns Noted',
+            hasYes ? 'कृपया डॉक्टर से सलाह लें' : 'कोई चिंता वाली बात नहीं दिखी',
             style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Color(0xFF2B2B2B)),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),
           Text(
             hasYes
-                ? 'You answered "Yes" to one or more questions. This does not mean you have cancer, but it is important to see a healthcare professional for a proper evaluation.'
-                : 'You answered "No" to all questions. Continue doing monthly self-checks and see a doctor for routine screenings.',
+                ? 'आपने एक या अधिक प्रश्नों का उत्तर "हाँ" दिया है। इसका मतलब यह नहीं है कि आपको कैंसर है, लेकिन सही जांच के लिए स्वास्थ्य विशेषज्ञ या डॉक्टर से सलाह लेना जरूरी है।'
+                : 'आपने सभी प्रश्नों का उत्तर "नहीं" दिया है। हर महीने स्वयं जांच जारी रखें और नियमित स्वास्थ्य जांच के लिए डॉक्टर से संपर्क करते रहें।',
             style: const TextStyle(fontSize: 14, height: 1.5, color: Color(0xFF555555)),
             textAlign: TextAlign.center,
           ),
@@ -159,7 +159,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
               minimumSize: const Size(double.infinity, 52),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             ),
-            child: const Text('Back to Home', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
+            child: const Text('होम पर वापस जाएं', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800)),
           ),
           const SizedBox(height: 12),
           OutlinedButton(
@@ -170,7 +170,7 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
               minimumSize: const Size(double.infinity, 52),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             ),
-            child: const Text('Retake Assessment', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+            child: const Text('फिर से मूल्यांकन करें', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -242,9 +242,9 @@ class _QuestionCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              _ChoiceChip(label: 'Yes', selected: answer == true, selectedColor: const Color(0xFFE91E63), onTap: () => onChanged(true)),
+              _ChoiceChip(label: 'हाँ', selected: answer == true, selectedColor: const Color(0xFFE91E63), onTap: () => onChanged(true)),
               const SizedBox(width: 10),
-              _ChoiceChip(label: 'No', selected: answer == false, selectedColor: const Color(0xFF2EAD5B), onTap: () => onChanged(false)),
+              _ChoiceChip(label: 'नहीं', selected: answer == false, selectedColor: const Color(0xFF2EAD5B), onTap: () => onChanged(false)),
             ],
           ),
         ],

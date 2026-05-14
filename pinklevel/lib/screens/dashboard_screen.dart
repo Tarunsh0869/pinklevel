@@ -21,17 +21,27 @@ class DashboardScreen extends StatelessWidget {
         final shouldExit = await showDialog<bool>(
           context: context,
           builder: (_) => AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            title: const Text('Exit App?', style: TextStyle(fontWeight: FontWeight.w800)),
-            content: const Text('Are you sure you want to exit?'),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: const Text(
+              'ऐप बंद करें?',
+              style: TextStyle(fontWeight: FontWeight.w800),
+            ),
+            content: const Text('क्या आप सच में ऐप बंद करना चाहते हैं?'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
+                child: const Text('रद्द करें'),
               ),
               TextButton(
                 onPressed: () => Navigator.pop(context, true),
-                child: const Text('Exit', style: TextStyle(color: Color(0xFFE91E63), fontWeight: FontWeight.w700)),
+                child: const Text(
+                  'बंद करें',
+                  style: TextStyle(
+                    color: Color(0xFFE91E63),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
               ),
             ],
           ),
@@ -57,7 +67,7 @@ class DashboardScreen extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(20, 28, 20, 28),
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFFE91E63), Color(0xFFFF5C93)],
+                      colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 255, 255, 255)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -66,65 +76,89 @@ class DashboardScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Hi 👋',
-                        style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: Colors.white),
+                        'नमस्ते 👋',
+                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.w900, color: Color.fromARGB(255, 0, 0, 0)),
                       ),
                       const SizedBox(height: 4),
                       const Text(
-                        'Ready for your quick self-check?',
-                        style: TextStyle(fontSize: 15, color: Colors.white70, fontWeight: FontWeight.w500),
+                        'आज आप कैसा महसूस कर रहे हैं?',
+                        style: TextStyle(fontSize: 20, color: Color.fromARGB(179, 0, 0, 0), fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(height: 20),
                       // Start button inside header
-                      GestureDetector(
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => const GuideScreen()));
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.symmetric(horizontal: 10, vertical:12),
+                        padding: const EdgeInsets.fromLTRB(24, 34, 24, 34),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(233, 30, 140, 1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 56,
+                              width: 56,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
                               ),
-                            ],
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFFFE4EF),
-                                  borderRadius: BorderRadius.circular(12),
+                              child: const Icon(
+                                Remix.heart_2_line,
+                                color: Color.fromRGBO(233, 30, 140, 1),
+                                size: 30,
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            const Text(
+                              'क्या आप स्वयं जांच के लिए\nतैयार हैं?',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                height: 1.35,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            const Text(
+                              'यह एक आसान चरण-दर-चरण गाइड है\nजिसमें लगभग 5 मिनट लगते हैं। घबराने की जरूरत नहीं।',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14,
+                                height: 1.45,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 22),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  HapticFeedback.lightImpact();
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GuideScreen()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: const Color.fromRGBO(233, 30, 140, 1),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                                child: const Icon(Remix.play_circle_line, color: Color(0xFFE91E63), size: 26),
-                              ),
-                              const SizedBox(width: 14),
-                              const Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Start Self-Check Guide',
-                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF2B2B2B)),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      '5 steps • 2 mins • Private',
-                                      style: TextStyle(fontSize: 12, color: Color(0xFF888888)),
-                                    ),
-                                  ],
+                                child: const Text(
+                                  'स्वयं जांच शुरू करें',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
-                              const Icon(Remix.arrow_right_s_line, color: Color(0xFFE91E63)),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -133,7 +167,7 @@ class DashboardScreen extends StatelessWidget {
 
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 28, 20, 0),
-                  child: Text('Quick Actions', style: Theme.of(context).textTheme.headlineSmall),
+                  child: Text('त्वरित विकल्प', style: Theme.of(context).textTheme.headlineSmall),
                 ),
 
                 Padding(
@@ -148,31 +182,51 @@ class DashboardScreen extends StatelessWidget {
                     children: [
                       _HapticIconCard(
                         icon: Remix.checkbox_circle_line,
-                        title: 'How to Check',
-                        subtitle: 'Self-assessment',
+                        title: 'स्वयं मूल्यांकन',
+                        subtitle: 'लक्षणों की जांच करें',
                         elevation: 4,
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AssessmentScreen())),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const AssessmentScreen(),
+                          ),
+                        ),
                       ),
                       _HapticIconCard(
                         icon: Remix.alert_line,
-                        title: 'Warning Signs',
-                        subtitle: 'What to look for',
+                        title: 'चेतावनी संकेत',
+                        subtitle: 'किन बातों पर ध्यान दें',
                         iconColor: AppTheme.warningOrange,
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const WarningSignsScreen())),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const WarningSignsScreen(),
+                          ),
+                        ),
                       ),
                       _HapticIconCard(
                         icon: Remix.lightbulb_line,
-                        title: 'Myths & Facts',
-                        subtitle: 'Get the truth',
+                        title: 'मिथक और तथ्य',
+                        subtitle: 'सही जानकारी पाएं',
                         iconColor: AppTheme.successGreen,
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MythsFactsScreen())),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const MythsFactsScreen(),
+                          ),
+                        ),
                       ),
                       _HapticIconCard(
                         icon: Remix.hospital_line,
-                        title: 'Doctor Visit',
-                        subtitle: 'When to see a doctor',
+                        title: 'डॉक्टर विजिट',
+                        subtitle: 'डॉक्टर से कब मिलें',
                         iconColor: AppTheme.darkPink,
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const DoctorVisitScreen())),
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const DoctorVisitScreen(),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -181,7 +235,7 @@ class DashboardScreen extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.fromLTRB(20, 28, 20, 24),
                   child: InfoBanner(
-                    message: 'Remember: Self-examination is not a substitute for professional medical checkups.',
+                    message: 'याद रखें: स्वयं जांच, डॉक्टर द्वारा की जाने वाली मेडिकल जांच का विकल्प नहीं है।',
                     icon: Remix.information_line,
                   ),
                 ),
