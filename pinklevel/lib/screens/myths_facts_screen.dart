@@ -10,34 +10,34 @@ class MythsFactsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<_MythFact> items = [
       _MythFact(
-        myth: 'Only women with a family history get breast cancer.',
+        myth: 'सिर्फ परिवार में इतिहास होने पर ही स्तन कैंसर होता है।',
         fact:
-            'About 85% of breast cancers occur in women with no family history. All women are at risk.',
+            'कई मामलों में स्तन कैंसर उन महिलाओं में भी हो सकता है जिनके परिवार में इसका कोई इतिहास नहीं होता। इसलिए सभी महिलाओं को जागरूक रहना चाहिए।',
       ),
       _MythFact(
-        myth: 'A lump in the breast always means cancer.',
+        myth: 'स्तन में गांठ का मतलब हमेशा कैंसर होता है।',
         fact:
-            'Most breast lumps are benign (non-cancerous). However, any new lump should be evaluated by a doctor.',
+            'हर गांठ कैंसर नहीं होती। कई गांठें सामान्य या गैर-कैंसर वाली हो सकती हैं। फिर भी नई गांठ दिखे तो डॉक्टर से जांच जरूर करवानी चाहिए।',
       ),
       _MythFact(
-        myth: 'Breast cancer only affects older women.',
+        myth: 'स्तन कैंसर केवल अधिक उम्र की महिलाओं को होता है।',
         fact:
-            'While risk increases with age, breast cancer can occur at any age, including in young women and men.',
+            'उम्र बढ़ने के साथ जोखिम बढ़ सकता है, लेकिन स्तन कैंसर किसी भी उम्र में हो सकता है। पुरुषों में भी स्तन कैंसर हो सकता है, हालांकि यह कम होता है।',
       ),
       _MythFact(
-        myth: 'Wearing underwire bras causes breast cancer.',
+        myth: 'अंडरवायर ब्रा पहनने से स्तन कैंसर होता है।',
         fact:
-            'There is no scientific evidence linking bra type or wearing habits to breast cancer risk.',
+            'ब्रा के प्रकार या पहनने की आदत और स्तन कैंसर के बीच कोई प्रमाणित वैज्ञानिक संबंध नहीं है।',
       ),
       _MythFact(
-        myth: 'Mammograms cause breast cancer to spread.',
+        myth: 'मैमोग्राम करवाने से कैंसर फैल जाता है।',
         fact:
-            'Mammograms use very low doses of radiation and are safe. The benefits of early detection far outweigh the minimal risk.',
+            'मैमोग्राम कम मात्रा की रेडिएशन का उपयोग करता है और सामान्य रूप से सुरक्षित माना जाता है। शुरुआती पहचान के लाभ इसके जोखिम से अधिक होते हैं।',
       ),
       _MythFact(
-        myth: 'Men cannot get breast cancer.',
+        myth: 'पुरुषों को स्तन कैंसर नहीं हो सकता।',
         fact:
-            'Men can get breast cancer, though it is rare. About 1% of all breast cancers occur in men.',
+            'पुरुषों को भी स्तन कैंसर हो सकता है, हालांकि यह दुर्लभ होता है। इसलिए किसी भी असामान्य बदलाव को नजरअंदाज नहीं करना चाहिए।',
       ),
     ];
 
@@ -50,7 +50,7 @@ class MythsFactsScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Myths & Facts'),
+        title: const Text('मिथक और तथ्य'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -59,12 +59,12 @@ class MythsFactsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Separating Myth from Fact',
+                'मिथक और तथ्य को समझें',
                 style: Theme.of(context).textTheme.displaySmall,
               ),
               const SizedBox(height: 12),
               Text(
-                'Misinformation can be dangerous. Here are the facts you need to know.',
+                'गलत जानकारी नुकसानदायक हो सकती है। यहां कुछ जरूरी तथ्य दिए गए हैं जिन्हें जानना आवश्यक है।',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: AppTheme.textSecondary,
                       height: 1.5,
@@ -75,7 +75,6 @@ class MythsFactsScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: items.length,
-                // ignore: unnecessary_underscores
                 separatorBuilder: (_, __) => const SizedBox(height: 16),
                 itemBuilder: (context, index) {
                   final item = items[index];
@@ -93,7 +92,7 @@ class MythsFactsScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                'MYTH',
+                                'मिथक',
                                 style: TextStyle(
                                   color: AppTheme.darkPink,
                                   fontWeight: FontWeight.bold,
@@ -124,7 +123,7 @@ class MythsFactsScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                'FACT',
+                                'तथ्य',
                                 style: TextStyle(
                                   color: AppTheme.successGreen,
                                   fontWeight: FontWeight.bold,
@@ -161,5 +160,8 @@ class _MythFact {
   final String myth;
   final String fact;
 
-  const _MythFact({required this.myth, required this.fact});
+  const _MythFact({
+    required this.myth,
+    required this.fact,
+  });
 }

@@ -23,18 +23,21 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   final List<_OnboardingPage> _pages = const [
     _OnboardingPage(
       icon: Remix.heart_pulse_line,
-      title: 'Know Your Body',
-      description: 'Learn how to perform a breast self-examination with our step-by-step guide.',
+      title: 'अपने शरीर को जानें',
+      description:
+          'हमारी चरण-दर-चरण गाइड की मदद से स्तन स्वयं जांच करना सीखें।',
     ),
     _OnboardingPage(
       icon: Remix.search_eye_line,
-      title: 'Spot the Signs',
-      description: 'Understand what changes to look for and when to seek medical advice.',
+      title: 'संकेतों को पहचानें',
+      description:
+          'जानें कि किन बदलावों पर ध्यान देना है और कब डॉक्टर से सलाह लेनी चाहिए।',
     ),
     _OnboardingPage(
       icon: Remix.shield_check_line,
-      title: 'Stay Protected',
-      description: 'Regular self-checks and professional screenings are key to early detection.',
+      title: 'स्वस्थ और सुरक्षित रहें',
+      description:
+          'नियमित स्वयं जांच और डॉक्टर द्वारा स्क्रीनिंग शुरुआती पहचान में मदद करती है।',
     ),
   ];
 
@@ -94,7 +97,13 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               alignment: Alignment.topRight,
               child: TextButton(
                 onPressed: _goToDashboard,
-                child: Text('Skip', style: TextStyle(color: AppTheme.primaryPink, fontWeight: FontWeight.w600)),
+                child: Text(
+                  'छोड़ें',
+                  style: TextStyle(
+                    color: AppTheme.primaryPink,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
             Expanded(
@@ -163,7 +172,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                   StepIndicator(currentStep: _currentPage, totalSteps: _pages.length),
                   const SizedBox(height: 24),
                   PrimaryButton(
-                    text: _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                    text: _currentPage == _pages.length - 1 ? 'शुरू करें' : 'अगला',
                     onPressed: _next,
                     icon: _currentPage == _pages.length - 1 ? Remix.rocket_line : Remix.arrow_right_line,
                   ),

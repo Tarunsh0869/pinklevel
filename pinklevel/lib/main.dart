@@ -1,41 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
+import 'locale_provider.dart';
 import 'screens/splash_screen.dart';
-import 'theme/app_theme.dart';
+import 'screens/language_screen.dart';
+import 'screens/dashboard_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
 
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  final localeProvider = LocaleProvider();
+  await localeProvider.loadSavedLanguage();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.dark,
+  runApp(
+    ChangeNotifierProvider.value(
+      value: localeProvider,
+      child: const MyApp(),
     ),
   );
-  
-  runApp(const BreastCancerAwarenessApp());
 }
 
-class BreastCancerAwarenessApp extends StatelessWidget {
-  const BreastCancerAwarenessApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Breast Cancer Awareness',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      locale: context.select<LocaleProvider, Locale>((p) => p.locale),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const SplashScreen(),
+      routes: {
+        '/language': (context) => const LanguageSelectionScreen(),
+        '/dashboard': (context) => const DashboardScreen(),
+      },
     );
   }
 }

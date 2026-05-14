@@ -11,32 +11,32 @@ class DoctorVisitScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> whenToVisit = [
-      'You find a new lump or mass in your breast or underarm',
-      'You notice changes in breast size, shape, or symmetry',
-      'There is nipple discharge (especially bloody or clear)',
-      'Your nipple has turned inward or changed position',
-      'You see dimpling, puckering, or skin texture changes',
-      'There is persistent redness, rash, or swelling',
-      'You experience unexplained breast or nipple pain',
-      'You notice any other unusual or persistent changes',
+      'स्तन या बगल में नई गांठ या कठोर भाग महसूस हो',
+      'स्तन के आकार, बनावट या समानता में बदलाव दिखे',
+      'निप्पल से स्राव हो, खासकर खून जैसा या साफ तरल',
+      'निप्पल अंदर की ओर मुड़ जाए या उसकी स्थिति बदल जाए',
+      'त्वचा में गड्ढे, सिकुड़न या बनावट में बदलाव दिखे',
+      'लगातार लालिमा, दाने या सूजन बनी रहे',
+      'स्तन या निप्पल में बिना कारण लगातार दर्द हो',
+      'कोई भी अन्य असामान्य या लंबे समय तक रहने वाला बदलाव दिखे',
     ];
 
     final List<String> whatToBring = [
-      'List of all current medications and supplements',
-      'Your medical history and previous breast imaging results',
-      'Family history of breast or ovarian cancer',
-      'List of your symptoms with dates when they started',
-      'Questions you want to ask your doctor',
-      'Insurance information and identification',
+      'वर्तमान दवाओं और सप्लीमेंट्स की सूची',
+      'अपना मेडिकल इतिहास और पहले की जांच रिपोर्ट',
+      'परिवार में स्तन या ओवरी कैंसर का इतिहास',
+      'लक्षणों की सूची और वे कब शुरू हुए',
+      'डॉक्टर से पूछने वाले सवालों की सूची',
+      'पहचान पत्र और जरूरी स्वास्थ्य दस्तावेज',
     ];
 
     final List<String> questionsToAsk = [
-      'What could be causing these changes?',
-      'Do I need any tests or imaging (mammogram, ultrasound)?',
-      'What are the next steps in diagnosis or treatment?',
-      'How often should I have breast examinations?',
-      'Are there risk factors I should be aware of?',
-      'When should I schedule a follow-up appointment?',
+      'इन बदलावों का कारण क्या हो सकता है?',
+      'क्या मुझे कोई जांच या इमेजिंग टेस्ट करवाने की जरूरत है?',
+      'जांच या इलाज के अगले कदम क्या होंगे?',
+      'मुझे कितनी बार स्तन की जांच करवानी चाहिए?',
+      'क्या मेरे लिए कोई जोखिम कारक हैं?',
+      'मुझे अगली मुलाकात कब तय करनी चाहिए?',
     ];
 
     return Scaffold(
@@ -48,7 +48,7 @@ class DoctorVisitScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Doctor Visit Guide'),
+        title: const Text('डॉक्टर विजिट गाइड'),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -88,7 +88,7 @@ class DoctorVisitScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'Don\'t wait if you notice any concerning changes. Early professional evaluation is crucial.',
+                'अगर आपको कोई चिंताजनक बदलाव दिखे तो इंतजार न करें। समय पर डॉक्टर से जांच करवाना बहुत जरूरी है।',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: AppTheme.textSecondary,
                       height: 1.5,
@@ -182,36 +182,37 @@ class DoctorVisitScreen extends StatelessWidget {
   void _showBookingDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Contact Healthcare Provider'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'This feature would typically connect to:',
-              style: TextStyle(fontWeight: FontWeight.w600),
+      builder: (context) =>
+          AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: const Text('स्वास्थ्य विशेषज्ञ से संपर्क करें'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'यह सुविधा आमतौर पर इनसे जुड़ सकती है:',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 12),
+                _dialogOption(Remix.phone_line, 'अपने डॉक्टर को कॉल करें'),
+                _dialogOption(Remix.global_line, 'ऑनलाइन बुकिंग पोर्टल'),
+                _dialogOption(Remix.message_line, 'मैसेजिंग सिस्टम'),
+                _dialogOption(Remix.map_pin_line, 'नजदीकी क्लिनिक खोजें'),
+                const SizedBox(height: 12),
+                const Text(
+                  'अभी के लिए कृपया अपने स्वास्थ्य विशेषज्ञ या डॉक्टर से सीधे संपर्क करें।',
+                  style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
+                ),
+              ],
             ),
-            const SizedBox(height: 12),
-            _dialogOption(Remix.phone_line, 'Call your doctor'),
-            _dialogOption(Remix.global_line, 'Online booking portal'),
-            _dialogOption(Remix.message_line, 'Messaging system'),
-            _dialogOption(Remix.map_pin_line, 'Find nearby clinics'),
-            const SizedBox(height: 12),
-            const Text(
-              'For now, please contact your healthcare provider directly.',
-              style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('बंद करें'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
