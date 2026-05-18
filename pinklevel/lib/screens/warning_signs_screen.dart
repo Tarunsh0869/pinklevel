@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../l10n/app_localizations.dart';
 import 'normal_vs_abnormal_screen.dart';
 
 class WarningSignsScreen extends StatelessWidget {
@@ -10,43 +11,15 @@ class WarningSignsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<_WarningSign> warningSigns = [
-      _WarningSign(
-        image: 'assets/new_lump.png',
-        title: 'New Lump',
-        description:
-            'A new lump or mass in the breast or underarm area that feels different from surrounding tissue.',
-      ),
-      _WarningSign(
-        image: 'assets/skin_dimpling.png',
-        title: 'Skin Dimpling',
-        description:
-            'Dimpling, puckering, or changes in the skin texture that looks like an orange peel.',
-      ),
-      _WarningSign(
-        image: 'assets/nipple_changes.png',
-        title: 'Nipple Changes',
-        description:
-            'Nipple turning inward, changes in position, or becoming inverted when it wasn\'t before.',
-      ),
-      _WarningSign(
-        image: 'assets/nipple_discharge.png',
-        title: 'Nipple Discharge',
-        description:
-            'Unusual discharge from the nipple, especially if bloody or clear fluid.',
-      ),
-      _WarningSign(
-        image: 'assets/swelling.png',
-        title: 'Swelling',
-        description:
-            'Swelling of all or part of the breast, even without a distinct lump.',
-      ),
-      _WarningSign(
-        image: 'assets/redness.png',
-        title: 'Redness or Sores',
-        description:
-            'Redness, scaliness, or thickening of the nipple or breast skin.',
-      ),
+    final l10n = AppLocalizations.of(context)!;
+
+    final warningSigns = [
+      _WarningSign(icon: Remix.search_eye_line,    title: l10n.warningSign1Title, description: l10n.warningSign1Desc),
+      _WarningSign(icon: Remix.body_scan_line,      title: l10n.warningSign2Title, description: l10n.warningSign2Desc),
+      _WarningSign(icon: Remix.focus_3_line,        title: l10n.warningSign3Title, description: l10n.warningSign3Desc),
+      _WarningSign(icon: Remix.drop_line,           title: l10n.warningSign4Title, description: l10n.warningSign4Desc),
+      _WarningSign(icon: Remix.first_aid_kit_line,  title: l10n.warningSign5Title, description: l10n.warningSign5Desc),
+      _WarningSign(icon: Remix.alarm_warning_line,  title: l10n.warningSign6Title, description: l10n.warningSign6Desc),
     ];
 
     return Scaffold(
@@ -58,21 +31,15 @@ class WarningSignsScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Warning Signs'),
+        title: Text(l10n.warningSigns),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
           child: PrimaryButton(
-            text: 'See Normal vs Abnormal',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const NormalVsAbnormalScreen(),
-                ),
-              );
-            },
+            text: l10n.warningSignsViewNormal,
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const NormalVsAbnormalScreen())),
             icon: Remix.git_branch_line,
           ),
         ),
@@ -83,37 +50,34 @@ class WarningSignsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'What to Look For',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              Text(l10n.warningSignsTitle,
+                  style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(height: 12),
               Text(
-                'Be aware of these potential warning signs. If you notice any of these, consult your doctor immediately.',
+                l10n.warningSignsSubtitle,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppTheme.textSecondary,
-                      height: 1.5,
-                    ),
+                    color: AppTheme.textSecondary, height: 1.5),
               ),
               const SizedBox(height: 28),
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: warningSigns.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 16),
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
                 itemBuilder: (context, index) {
                   final sign = warningSigns[index];
                   return WarningSignCard(
-                    image: sign.image,
+                    key: ValueKey(sign.title),
+                    icon: sign.icon,
                     title: sign.title,
                     description: sign.description,
                   );
                 },
               ),
               const SizedBox(height: 28),
-              const InfoBanner(
-                message:
-                    'Remember: Many breast changes are not cancer. However, it\'s important to have any concerns checked by a healthcare professional.',
+              InfoBanner(
+                message: l10n.warningSignsBanner,
                 icon: Remix.information_line,
               ),
               const SizedBox(height: 24),
@@ -126,13 +90,79 @@ class WarningSignsScreen extends StatelessWidget {
 }
 
 class _WarningSign {
-  final String image;
+  final IconData icon;
   final String title;
   final String description;
 
-  _WarningSign({
-    required this.image,
+  const _WarningSign({
+    required this.icon,
     required this.title,
     required this.description,
   });
+}
+
+class WarningSignCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String description;
+
+  const WarningSignCard({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.description,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 58,
+            width: 58,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFEAF4),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Icon(icon, color: const Color(0xFFE91E63), size: 30),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                        color: Color(0xFF2D2D2D),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800)),
+                const SizedBox(height: 6),
+                Text(description,
+                    style: const TextStyle(
+                        color: Color(0xFF6A6A6A),
+                        fontSize: 14,
+                        height: 1.45,
+                        fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

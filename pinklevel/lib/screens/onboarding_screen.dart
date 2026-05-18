@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../l10n/app_localizations.dart';
 import 'dashboard_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -20,23 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   late Animation<Offset> _slideAnim;
   int _currentPage = 0;
 
-  final List<_OnboardingPage> _pages = const [
-    _OnboardingPage(
-      icon: Remix.heart_pulse_line,
-      title: 'Know Your Body',
-      description: 'Learn how to perform a breast self-examination with our step-by-step guide.',
-    ),
-    _OnboardingPage(
-      icon: Remix.search_eye_line,
-      title: 'Spot the Signs',
-      description: 'Understand what changes to look for and when to seek medical advice.',
-    ),
-    _OnboardingPage(
-      icon: Remix.shield_check_line,
-      title: 'Stay Protected',
-      description: 'Regular self-checks and professional screenings are key to early detection.',
-    ),
-  ];
+  static const _pageCount = 3;
 
   @override
   void initState() {
@@ -45,9 +30,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _fadeAnim = CurvedAnimation(parent: _animController, curve: Curves.easeIn);
-    _slideAnim = Tween<Offset>(begin: const Offset(0.1, 0), end: Offset.zero)
-        .animate(CurvedAnimation(parent: _animController, curve: Curves.easeOut));
+    _fadeAnim =
+        CurvedAnimation(parent: _animController, curve: Curves.easeIn);
+    _slideAnim =
+        Tween<Offset>(begin: const Offset(0.1, 0), end: Offset.zero).animate(
+            CurvedAnimation(parent: _animController, curve: Curves.easeOut));
     _animController.forward();
   }
 
@@ -67,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
   void _next() {
     HapticFeedback.lightImpact();
-    if (_currentPage < _pages.length - 1) {
+    if (_currentPage < _pageCount - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -85,6 +72,26 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final pages = [
+      _OnboardingPage(
+        icon: Remix.heart_pulse_line,
+        title: l10n.onboarding1Title,
+        description: l10n.onboarding1Desc,
+      ),
+      _OnboardingPage(
+        icon: Remix.search_eye_line,
+        title: l10n.onboarding2Title,
+        description: l10n.onboarding2Desc,
+      ),
+      _OnboardingPage(
+        icon: Remix.shield_check_line,
+        title: l10n.onboarding3Title,
+        description: l10n.onboarding3Desc,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -94,61 +101,95 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               alignment: Alignment.topRight,
               child: TextButton(
                 onPressed: _goToDashboard,
-                child: Text('Skip', style: TextStyle(color: AppTheme.primaryPink, fontWeight: FontWeight.w600)),
+                child: Text(
+                  l10n.onboardingSkip,
+                  style: TextStyle(
+                    color: AppTheme.primaryPink,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ),
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: _onPageChanged,
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 itemBuilder: (context, index) {
-                  final page = _pages[index];
+                  final page = pages[index];
+                  final screenHeight = MediaQuery.of(context).size.height;
+                  final iconSize = screenHeight < 600 ? 90.0 : 130.0;
+                  final iconInnerSize = screenHeight < 600 ? 40.0 : 60.0;
+                  final verticalSpacing = screenHeight < 600 ? 16.0 : 40.0;
+                  final horizontalPadding = 32.0;
+
                   return FadeTransition(
                     opacity: _fadeAnim,
                     child: SlideTransition(
                       position: _slideAnim,
-                      child: Padding(
-                        padding: const EdgeInsets.all(40),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 130,
-                              height: 130,
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [Color(0xFFE91E63), Color(0xFFFF5C93)],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: horizontalPadding,
+                          vertical: 16,
+                        ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: MediaQuery.of(context).size.height * 0.5,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: iconSize,
+                                height: iconSize,
+                                decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFFE91E63),
+                                      Color(0xFFFF5C93)
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppTheme.primaryPink
+                                          .withOpacity(0.3),
+                                      blurRadius: 24,
+                                      offset: const Offset(0, 8),
+                                    ),
+                                  ],
                                 ),
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppTheme.primaryPink.withOpacity(0.3),
-                                    blurRadius: 24,
-                                    offset: const Offset(0, 8),
-                                  ),
-                                ],
+                                child: Icon(page.icon,
+                                    size: iconInnerSize, color: Colors.white),
                               ),
-                              child: Icon(page.icon, size: 60, color: Colors.white),
-                            ),
-                            const SizedBox(height: 40),
-                            Text(
-                              page.title,
-                              style: Theme.of(context).textTheme.displaySmall,
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              page.description,
-                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: AppTheme.textSecondary,
-                                    height: 1.6,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                              SizedBox(height: verticalSpacing),
+                              Text(
+                                page.title,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
+                                    ?.copyWith(
+                                      fontSize: screenHeight < 600 ? 22 : null,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                page.description,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(
+                                      color: AppTheme.textSecondary,
+                                      height: 1.6,
+                                      fontSize: screenHeight < 600 ? 14 : null,
+                                    ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -157,17 +198,26 @@ class _OnboardingScreenState extends State<OnboardingScreen>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 32),
+              padding: EdgeInsets.fromLTRB(
+                24,
+                0,
+                24,
+                MediaQuery.of(context).size.height < 600 ? 16 : 32,
+              ),
               child: Column(
                 children: [
-                  StepIndicator(currentStep: _currentPage, totalSteps: _pages.length),
+                  StepIndicator(
+                      currentStep: _currentPage, totalSteps: pages.length),
                   const SizedBox(height: 24),
                   PrimaryButton(
-                    text: _currentPage == _pages.length - 1 ? 'Get Started' : 'Next',
+                    text: _currentPage == pages.length - 1
+                        ? l10n.onboardingGetStarted
+                        : l10n.onboardingNext,
                     onPressed: _next,
-                    icon: _currentPage == _pages.length - 1 ? Remix.rocket_line : Remix.arrow_right_line,
+                    icon: _currentPage == pages.length - 1
+                        ? Remix.rocket_line
+                        : Remix.arrow_right_line,
                   ),
-
                 ],
               ),
             ),

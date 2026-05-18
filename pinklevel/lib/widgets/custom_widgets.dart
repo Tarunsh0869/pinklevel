@@ -146,12 +146,13 @@ class IconCard extends StatelessWidget {
     return CustomCard(
       onTap: onTap,
       elevation: elevation,
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: (iconColor ?? AppTheme.primaryPink).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
@@ -159,10 +160,10 @@ class IconCard extends StatelessWidget {
             child: Icon(
               icon,
               color: iconColor ?? AppTheme.primaryPink,
-              size: 24,
+              size: 22,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text(
             title,
             style: Theme.of(context).textTheme.titleMedium,

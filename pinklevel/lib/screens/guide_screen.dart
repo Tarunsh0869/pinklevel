@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:remixicon/remixicon.dart';
-import '../theme/app_theme.dart';
-import '../widgets/custom_widgets.dart';
+import '../l10n/app_localizations.dart';
 
 class GuideScreen extends StatefulWidget {
   const GuideScreen({super.key});
@@ -12,201 +11,341 @@ class GuideScreen extends StatefulWidget {
 }
 
 class _GuideScreenState extends State<GuideScreen> {
-  int _currentStep = 0;
+  final Map<int, bool?> _answers = {};
+  bool _submitted = false;
 
-  final List<_GuideStep> _steps = const [
-    _GuideStep(
-      icon: Remix.eye_line,
-      title: 'Visual Inspection',
-      description:
-          'Stand in front of a mirror with your arms at your sides. Look for any changes in breast size, shape, or symmetry. Check for skin dimpling, puckering, or changes in the nipple.',
-    ),
-    _GuideStep(
-      icon: Remix.hand_heart_line,
-      title: 'Arms Raised',
-      description:
-          'Raise both arms above your head and look for the same changes. This position can reveal dimpling or changes not visible otherwise.',
-    ),
-    _GuideStep(
-      icon: Remix.drop_line,
-      title: 'Check for Discharge',
-      description:
-          'Gently squeeze each nipple and check for any discharge. Any unusual discharge, especially bloody or clear fluid, should be reported to your doctor.',
-    ),
-    _GuideStep(
-      icon: Remix.hotel_bed_line,
-      title: 'Lying Down Exam',
-      description:
-          'Lie down and place your right hand behind your head. Use your left hand to feel your right breast using small circular motions. Cover the entire breast from armpit to sternum.',
-    ),
-    _GuideStep(
-      icon: Remix.hand_sanitizer_line,
-      title: 'Standing Exam',
-      description:
-          'Repeat the circular motion exam while standing or sitting. Many women find it easiest to do this in the shower. Use the pads of your fingers, not the tips.',
-    ),
-  ];
-
-  void _next() {
-    if (_currentStep < _steps.length - 1) {
-      HapticFeedback.lightImpact();
-      setState(() => _currentStep++);
-    } else {
-      Navigator.pop(context);
-    }
-  }
-
-  void _prev() {
-    if (_currentStep > 0) {
-      HapticFeedback.lightImpact();
-      setState(() => _currentStep--);
-    }
-  }
+  void _reset() => setState(() {
+        _answers.clear();
+        _submitted = false;
+      });
 
   @override
   Widget build(BuildContext context) {
-    final step = _steps[_currentStep];
+    final l10n = AppLocalizations.of(context)!;
+
+    final questions = [
+      l10n.assessmentQ1,
+      l10n.assessmentQ2,
+      l10n.assessmentQ3,
+      l10n.assessmentQ4,
+      l10n.assessmentQ5,
+      l10n.assessmentQ6,
+    ];
 
     return Scaffold(
+      backgroundColor: const Color(0xFFFFF8FB),
       appBar: AppBar(
-        backgroundColor: AppTheme.primaryPink,
+        backgroundColor: const Color(0xFFE91E63),
         foregroundColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Self-Exam Guide'),
+        title: Text(l10n.assessmentTitle,
+            style: const TextStyle(fontWeight: FontWeight.w800)),
+        elevation: 0,
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
+      body: _submitted
+          ? _buildResult(context, l10n)
+          : _buildQuestions(context, l10n, questions),
+    );
+  }
+
+  Widget _buildQuestions(
+      BuildContext context, AppLocalizations l10n, List<String> questions) {
+    final answered = _answers.length;
+    final total = questions.length;
+    final progress = answered / total;
+
+    return Column(
+      children: [
+        Container(
+          color: const Color(0xFFE91E63),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StepIndicator(
-                currentStep: _currentStep,
-                totalSteps: _steps.length,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Step ${_currentStep + 1} of ${_steps.length}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 32),
-              Expanded(
-                child: GestureDetector(
-                  onHorizontalDragEnd: (details) {
-                    if (details.primaryVelocity == null) return;
-                    if (details.primaryVelocity! < -200) _next();
-                    if (details.primaryVelocity! > 200) _prev();
-                  },
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    transitionBuilder: (child, animation) => SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0.1, 0),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: FadeTransition(opacity: animation, child: child),
-                    ),
-                    child: CustomCard(
-                      key: ValueKey(_currentStep),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFFE91E63), Color(0xFFFF5C93)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppTheme.primaryPink.withValues(alpha: 0.25),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                            child: Icon(step.icon, size: 50, color: Colors.white),
-                          ),
-                          const SizedBox(height: 32),
-                          Text(
-                            step.title,
-                            style: Theme.of(context).textTheme.headlineMedium,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            step.description,
-                            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                  color: AppTheme.textSecondary,
-                                  height: 1.6,
-                                ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Remix.arrow_left_right_line,
-                                  size: 14, color: AppTheme.textSecondary),
-                              const SizedBox(width: 6),
-                              Text(
-                                'Swipe to navigate',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: AppTheme.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (_currentStep > 0)
-                    Expanded(
-                      child: SecondaryButton(
-                        text: 'Previous',
-                        onPressed: _prev,
-                      ),
-                    ),
-                  if (_currentStep > 0) const SizedBox(width: 16),
-                  Expanded(
-                    child: PrimaryButton(
-                      text: _currentStep == _steps.length - 1 ? 'Finish' : 'Next Step',
-                      onPressed: _next,
-                    ),
+                  Text(
+                    l10n.assessmentProgressLabel(answered, total),
+                    style: const TextStyle(color: Colors.white70, fontSize: 13),
+                  ),
+                  Text(
+                    '${(progress * 100).toInt()}%',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 13),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 8,
+                  backgroundColor: Colors.white30,
+                  valueColor:
+                      const AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
             ],
           ),
         ),
+        Expanded(
+          child: ListView.separated(
+            padding: const EdgeInsets.all(20),
+            itemCount: questions.length,
+            separatorBuilder: (context, index) =>
+                const SizedBox(height: 14),
+            itemBuilder: (_, i) => _QuestionCard(
+              index: i,
+              question: questions[i],
+              answer: _answers[i],
+              yesLabel: l10n.assessmentYes,
+              noLabel: l10n.assessmentNo,
+              onChanged: (val) {
+                HapticFeedback.lightImpact();
+                setState(() => _answers[i] = val);
+              },
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+          child: ElevatedButton(
+            onPressed: answered == total
+                ? () {
+                    HapticFeedback.mediumImpact();
+                    setState(() => _submitted = true);
+                  }
+                : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFE91E63),
+              foregroundColor: Colors.white,
+              minimumSize: const Size(double.infinity, 52),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+            ),
+            child: Text(l10n.assessmentSubmit,
+                style: const TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.w800)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResult(BuildContext context, AppLocalizations l10n) {
+    final hasYes = _answers.values.any((v) => v == true);
+    return Padding(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircleAvatar(
+            radius: 56,
+            backgroundColor: hasYes
+                ? const Color(0xFFFFE4EF)
+                : const Color(0xFFE7F7EC),
+            child: Icon(
+              hasYes
+                  ? Remix.stethoscope_line
+                  : Remix.checkbox_circle_line,
+              size: 52,
+              color: hasYes
+                  ? const Color(0xFFE91E63)
+                  : const Color(0xFF2EAD5B),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            hasYes
+                ? l10n.assessmentResultConsult
+                : l10n.assessmentResultNoConcern,
+            style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                color: Color(0xFF2B2B2B)),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            hasYes
+                ? l10n.assessmentResultConsultBody
+                : l10n.assessmentResultNoConcernBody,
+            style: const TextStyle(
+                fontSize: 14, height: 1.5, color: Color(0xFF555555)),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 32),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFE91E63),
+              foregroundColor: Colors.white,
+              minimumSize: const Size(double.infinity, 52),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+            ),
+            child: Text(l10n.assessmentGoHome,
+                style: const TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.w800)),
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            onPressed: _reset,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: const Color(0xFFE91E63),
+              side: const BorderSide(color: Color(0xFFE91E63), width: 2),
+              minimumSize: const Size(double.infinity, 52),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+            ),
+            child: Text(l10n.assessmentRetake,
+                style: const TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.w700)),
+          ),
+        ],
       ),
     );
   }
 }
 
-class _GuideStep {
-  final IconData icon;
-  final String title;
-  final String description;
+class _QuestionCard extends StatelessWidget {
+  final int index;
+  final String question;
+  final bool? answer;
+  final String yesLabel;
+  final String noLabel;
+  final ValueChanged<bool?> onChanged;
 
-  const _GuideStep({
-    required this.icon,
-    required this.title,
-    required this.description,
+  const _QuestionCard({
+    required this.index,
+    required this.question,
+    required this.answer,
+    required this.yesLabel,
+    required this.noLabel,
+    required this.onChanged,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    final isAnswered = answer != null;
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                height: 36,
+                width: 36,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: isAnswered
+                      ? const Color(0xFFE91E63)
+                      : const Color(0xFFF5F5F5),
+                  shape: BoxShape.circle,
+                ),
+child: isAnswered
+                    ? const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                        size: 14,
+                      )
+                    : Text(
+                        '${index + 1}',
+                        style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF888888)),
+                      ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  question,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF2B2B2B),
+                    height: 1.4,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              _ChoiceChip(
+                label: yesLabel,
+                selected: answer == true,
+                selectedColor: const Color(0xFFE91E63),
+                onTap: () => onChanged(true),
+              ),
+              _ChoiceChip(
+                label: noLabel,
+                selected: answer == false,
+                selectedColor: const Color(0xFF2EAD5B),
+                onTap: () => onChanged(false),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ChoiceChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final Color selectedColor;
+  final VoidCallback onTap;
+
+  const _ChoiceChip({
+    required this.label,
+    required this.selected,
+    required this.selectedColor,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? selectedColor : const Color(0xFFF5F5F5),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? Colors.white : const Color(0xFF888888),
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+          ),
+        ),
+      ),
+    );
+  }
 }

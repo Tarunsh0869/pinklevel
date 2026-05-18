@@ -3,12 +3,32 @@ import 'package:flutter/services.dart';
 import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../l10n/app_localizations.dart';
 
 class NormalVsAbnormalScreen extends StatelessWidget {
   const NormalVsAbnormalScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final normalItems = [
+      l10n.normalItem1,
+      l10n.normalItem2,
+      l10n.normalItem3,
+      l10n.normalItem4,
+      l10n.normalItem5,
+    ];
+
+    final abnormalItems = [
+      l10n.abnormalItem1,
+      l10n.abnormalItem2,
+      l10n.abnormalItem3,
+      l10n.abnormalItem4,
+      l10n.abnormalItem5,
+      l10n.abnormalItem6,
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPink,
@@ -18,7 +38,7 @@ class NormalVsAbnormalScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Normal vs Abnormal'),
+        title: Text(l10n.normalVsAbnormalPageTitle),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -26,61 +46,42 @@ class NormalVsAbnormalScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'What\'s Normal?',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              Text(l10n.normalVsAbnormalHeading,
+                  style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(height: 12),
               Text(
-                'Understanding what is normal for your body helps you identify changes that need attention.',
+                l10n.normalVsAbnormalSubtitle,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppTheme.textSecondary,
-                      height: 1.5,
-                    ),
+                    color: AppTheme.textSecondary, height: 1.5),
               ),
               const SizedBox(height: 28),
-              // Side-by-side comparison
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: _buildSection(
                       context: context,
-                      title: 'Normal',
+                      title: l10n.normalColumnTitle,
                       icon: Remix.checkbox_circle_line,
                       color: AppTheme.successGreen,
-                      items: [
-                        'Slight size difference between breasts',
-                        'Tenderness before your period',
-                        'Lumpy or rope-like texture',
-                        'Discharge during pregnancy',
-                        'Size changes during cycle',
-                      ],
+                      items: normalItems,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildSection(
                       context: context,
-                      title: 'See a Doctor',
+                      title: l10n.abnormalColumnTitle,
                       icon: Remix.stethoscope_line,
                       color: AppTheme.darkPink,
-                      items: [
-                        'New hard or painless lump',
-                        'Skin dimpling or puckering',
-                        'Nipple turning inward',
-                        'Bloody nipple discharge',
-                        'Persistent redness or rash',
-                        'Unexplained shape changes',
-                      ],
+                      items: abnormalItems,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 28),
-              const InfoBanner(
-                message:
-                    'You know your body best. If something feels different or wrong, trust your instincts and consult a healthcare professional.',
+              InfoBanner(
+                message: l10n.normalVsAbnormalBanner,
                 icon: Remix.heart_line,
               ),
               const SizedBox(height: 24),
@@ -112,12 +113,14 @@ class NormalVsAbnormalScreen extends StatelessWidget {
             children: [
               Icon(icon, color: color, size: 18),
               const SizedBox(width: 6),
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: color,
-                      fontWeight: FontWeight.w800,
-                    ),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: color,
+                        fontWeight: FontWeight.w800,
+                      ),
+                ),
               ),
             ],
           ),
@@ -131,12 +134,11 @@ class NormalVsAbnormalScreen extends StatelessWidget {
                   Icon(Remix.arrow_right_s_line, color: color, size: 18),
                   const SizedBox(width: 4),
                   Expanded(
-                    child: Text(
-                      item,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            height: 1.4,
-                          ),
-                    ),
+                    child: Text(item,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(height: 1.4)),
                   ),
                 ],
               ),
