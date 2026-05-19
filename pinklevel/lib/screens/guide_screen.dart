@@ -16,6 +16,7 @@ class GuideScreen extends StatefulWidget {
 
 class _GuideScreenState extends State<GuideScreen> {
   int _currentStep = 0;
+  final PageController _pageController = PageController();
   final FlutterTts _tts = FlutterTts();
   bool _isPlaying = false;
 
@@ -37,6 +38,7 @@ class _GuideScreenState extends State<GuideScreen> {
   @override
   void dispose() {
     _tts.stop();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -44,7 +46,11 @@ class _GuideScreenState extends State<GuideScreen> {
     if (_currentStep < totalSteps - 1) {
       HapticFeedback.lightImpact();
       _stopAudio();
-      setState(() => _currentStep++);
+      _pageController.animateToPage(
+        _currentStep + 1,
+        duration: const Duration(milliseconds: 260),
+        curve: Curves.easeOut,
+      );
     } else {
       _stopAudio();
       Navigator.pop(context);
@@ -55,8 +61,21 @@ class _GuideScreenState extends State<GuideScreen> {
     if (_currentStep > 0) {
       HapticFeedback.lightImpact();
       _stopAudio();
-      setState(() => _currentStep--);
+      _pageController.animateToPage(
+        _currentStep - 1,
+        duration: const Duration(milliseconds: 260),
+        curve: Curves.easeOut,
+      );
     }
+  }
+
+  void _onStepChanged(int step) {
+    if (_currentStep == step) return;
+    _tts.stop();
+    setState(() {
+      _isPlaying = false;
+      _currentStep = step;
+    });
   }
 
   void _stopAudio() {
@@ -203,11 +222,17 @@ class _GuideScreenState extends State<GuideScreen> {
           children: [
             // ── Scrollable content ──────────────────────────────────────
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(20),
-                children: [
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: _onStepChanged,
+                itemCount: steps.length,
+                itemBuilder: (context, index) {
+                  final step = steps[index];
+                  return ListView(
+                    padding: const EdgeInsets.all(20),
+                    children: [
                   StepIndicator(
-                    currentStep: _currentStep,
+                    currentStep: index,
                     totalSteps: steps.length,
                   ),
                   const SizedBox(height: 24),
@@ -243,7 +268,7 @@ class _GuideScreenState extends State<GuideScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  '${_currentStep + 1}',
+                                  '${index + 1}',
                                   style: const TextStyle(
                                     color: Color(0xFF8E4B6A),
                                     fontSize: 16,
@@ -289,7 +314,7 @@ class _GuideScreenState extends State<GuideScreen> {
 
                         // ── Listen / transcript banner ─────────────────
                         _TranscriptBanner(
-                          isPlaying: _isPlaying,
+                          isPlaying: _isPlaying && index == _currentStep,
                           onTap: () => _toggleAudio(step),
                         ),
                         const SizedBox(height: 18),
@@ -335,7 +360,9 @@ class _GuideScreenState extends State<GuideScreen> {
                     text: step.clinicalAdvice,
                   ),
                   const SizedBox(height: 16),
-                ],
+                    ],
+                  );
+                },
               ),
             ),
 

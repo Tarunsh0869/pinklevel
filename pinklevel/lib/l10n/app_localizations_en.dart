@@ -115,6 +115,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assessmentSubmit => 'Submit';
 
   @override
+  String get assessmentNext => 'Next';
+
+  @override
+  String get assessmentPrevious => 'Previous';
+
+  @override
+  String get assessmentAnswerAll =>
+      'Please answer all questions before submitting.';
+
+  @override
+  String get assessmentWhyThisMatters =>
+      'Why this matters: This symptom helps evaluate your baseline wellness profile.';
+
+  @override
+  String get assessmentNoteQ1 =>
+      'Why this matters: A new lump or thickening can be an early warning sign and should be checked by a healthcare professional.';
+
+  @override
+  String get assessmentNoteQ2 =>
+      'Why this matters: A change in breast size or shape may point to tissue changes that need medical review.';
+
+  @override
+  String get assessmentNoteQ3 =>
+      'Why this matters: Dimpling, puckering, or redness can happen when breast skin or tissue is affected.';
+
+  @override
+  String get assessmentNoteQ4 =>
+      'Why this matters: Unusual nipple discharge, especially if it happens without pressing, should be discussed with a doctor.';
+
+  @override
+  String get assessmentNoteQ5 =>
+      'Why this matters: A nipple turning inward or changing direction can signal changes under the skin.';
+
+  @override
+  String get assessmentNoteQ6 =>
+      'Why this matters: Persistent breast or nipple pain is usually not cancer, but ongoing pain should be evaluated.';
+
+  @override
   String get assessmentResultConsult => 'Please Consult a Doctor';
 
   @override
@@ -595,6 +633,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get disclaimerUnderstood => 'I Understand';
+
+  @override
+  String get careIntroTitle => 'Guided Care Starts Here';
+
+  @override
+  String get careIntroSubtitle =>
+      'A calm doctor-supported introduction before your breast health self-exam guide.';
+
+  @override
+  String get careIntroButton => 'Continue to Onboarding';
 
   @override
   String get onboardingSkip => 'Skip';

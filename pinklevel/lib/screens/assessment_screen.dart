@@ -16,12 +16,40 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
   int _currentPage = 0;
   bool _submitted = false;
 
-  void _reset() => setState(() {
-        _answers.clear();
-        _submitted = false;
-        _currentPage = 0;
-        _pageController.jumpToPage(0);
-      });
+  void _goToQuestion(int page) {
+    if (!_pageController.hasClients || page == _currentPage) return;
+    HapticFeedback.lightImpact();
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void _submitAssessment(AppLocalizations l10n, int total) {
+    if (_answers.length < total) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.assessmentAnswerAll)),
+      );
+      return;
+    }
+
+    HapticFeedback.mediumImpact();
+    setState(() => _submitted = true);
+  }
+
+  void _reset() {
+    setState(() {
+      _answers.clear();
+      _submitted = false;
+      _currentPage = 0;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_pageController.hasClients) return;
+      _pageController.jumpToPage(0);
+    });
+  }
 
   @override
   void dispose() {
@@ -42,6 +70,15 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
       l10n.assessmentQ6,
     ];
 
+    final notes = [
+      l10n.assessmentNoteQ1,
+      l10n.assessmentNoteQ2,
+      l10n.assessmentNoteQ3,
+      l10n.assessmentNoteQ4,
+      l10n.assessmentNoteQ5,
+      l10n.assessmentNoteQ6,
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8FB),
       appBar: AppBar(
@@ -58,15 +95,20 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
       ),
       body: _submitted
           ? _buildResult(context, l10n)
-          : _buildQuestions(context, l10n, questions),
+          : _buildQuestions(context, l10n, questions, notes),
     );
   }
 
   Widget _buildQuestions(
-      BuildContext context, AppLocalizations l10n, List<String> questions) {
+    BuildContext context,
+    AppLocalizations l10n,
+    List<String> questions,
+    List<String> notes,
+  ) {
     final answered = _answers.length;
     final total = questions.length;
     final progress = answered / total;
+    final isLastQuestion = _currentPage == total - 1;
 
     return Column(
       children: [
@@ -108,43 +150,126 @@ class _AssessmentScreenState extends State<AssessmentScreen> {
           ),
         ),
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.all(20),
+          child: PageView.builder(
+            controller: _pageController,
+            onPageChanged: (page) => setState(() => _currentPage = page),
             itemCount: questions.length,
-            separatorBuilder: (context, index) =>
-                const SizedBox(height: 14),
-            itemBuilder: (_, i) => _QuestionCard(
-              index: i,
-              question: questions[i],
-              answer: _answers[i],
-              yesLabel: l10n.assessmentYes,
-              noLabel: l10n.assessmentNo,
-              onChanged: (val) {
-                HapticFeedback.lightImpact();
-                setState(() => _answers[i] = val);
-              },
+            itemBuilder: (_, i) => Padding(
+              padding: const EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _QuestionCard(
+                      index: i,
+                      question: questions[i],
+                      answer: _answers[i],
+                      yesLabel: l10n.assessmentYes,
+                      noLabel: l10n.assessmentNo,
+                      onChanged: (val) {
+                        HapticFeedback.lightImpact();
+                        setState(() => _answers[i] = val);
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF0F5),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                            color: const Color(0xFFFFC1D6), width: 1),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Remix.information_line,
+                              color: Color(0xFFE91E63), size: 20),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              notes[i],
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF555555),
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              questions.length,
+              (i) => AnimatedContainer(
+                duration: const Duration(milliseconds: 180),
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                width: i == _currentPage ? 22 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: i == _currentPage
+                      ? const Color(0xFFE91E63)
+                      : const Color(0xFFFFC1D6),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-          child: ElevatedButton(
-            onPressed: answered == total
-                ? () {
-                    HapticFeedback.mediumImpact();
-                    setState(() => _submitted = true);
-                  }
-                : null,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFE91E63),
-              foregroundColor: Colors.white,
-              minimumSize: const Size(double.infinity, 52),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-            ),
-            child: Text(l10n.assessmentSubmit,
-                style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.w800)),
+          child: Row(
+            children: [
+              if (_currentPage > 0) ...[
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => _goToQuestion(_currentPage - 1),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: const Color(0xFFE91E63),
+                      side: const BorderSide(
+                          color: Color(0xFFE91E63), width: 2),
+                      minimumSize: const Size(double.infinity, 52),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                    ),
+                    child: Text(l10n.assessmentPrevious,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700)),
+                  ),
+                ),
+                const SizedBox(width: 14),
+              ],
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: isLastQuestion
+                      ? () => _submitAssessment(l10n, total)
+                      : () => _goToQuestion(_currentPage + 1),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFE91E63),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 52),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                  ),
+                  child: Text(
+                    isLastQuestion
+                        ? l10n.assessmentSubmit
+                        : l10n.assessmentNext,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w800),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -305,7 +430,7 @@ class _QuestionCard extends StatelessWidget {
               ),
             ],
           ),
-                    const SizedBox(height: 12),
+          const SizedBox(height: 12),
           Wrap(
             spacing: 10,
             runSpacing: 10,
@@ -347,8 +472,7 @@ class _ChoiceChip extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 150),
-        padding:
-            const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         decoration: BoxDecoration(
           color: selected ? selectedColor : const Color(0xFFF5F5F5),
           borderRadius: BorderRadius.circular(20),

@@ -67,7 +67,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get dashboardAssessmentTitle => 'लक्षण चेकलिस्ट';
 
   @override
-  String get dashboardAssessmentSubtitle => 'चेतावनी संकेतों के सवालों के जवाब दें';
+  String get dashboardAssessmentSubtitle =>
+      'चेतावनी संकेतों के सवालों के जवाब दें';
 
   @override
   String get dashboardWarningTitle => 'चेतावनी संकेत';
@@ -113,6 +114,44 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get assessmentSubmit => 'सबमिट करें';
+
+  @override
+  String get assessmentNext => 'अगला';
+
+  @override
+  String get assessmentPrevious => 'पिछला';
+
+  @override
+  String get assessmentAnswerAll =>
+      'सबमिट करने से पहले सभी सवालों के जवाब दें।';
+
+  @override
+  String get assessmentWhyThisMatters =>
+      'यह क्यों जरूरी है: यह लक्षण आपकी सामान्य स्वास्थ्य स्थिति को समझने में मदद करता है।';
+
+  @override
+  String get assessmentNoteQ1 =>
+      'यह क्यों जरूरी है: नई गांठ या मोटापन शुरुआती चेतावनी संकेत हो सकता है, इसलिए डॉक्टर से जांच कराना जरूरी है।';
+
+  @override
+  String get assessmentNoteQ2 =>
+      'यह क्यों जरूरी है: स्तन के आकार या बनावट में बदलाव अंदरूनी ऊतक में बदलाव का संकेत हो सकता है।';
+
+  @override
+  String get assessmentNoteQ3 =>
+      'यह क्यों जरूरी है: त्वचा पर गड्ढे, सिकुड़न या लालिमा स्तन की त्वचा या ऊतक में बदलाव से जुड़ी हो सकती है।';
+
+  @override
+  String get assessmentNoteQ4 =>
+      'यह क्यों जरूरी है: निप्पल से असामान्य स्राव, खासकर बिना दबाए, डॉक्टर से चर्चा करने योग्य संकेत है।';
+
+  @override
+  String get assessmentNoteQ5 =>
+      'यह क्यों जरूरी है: निप्पल का अंदर मुड़ना या दिशा बदलना त्वचा के नीचे बदलाव का संकेत हो सकता है।';
+
+  @override
+  String get assessmentNoteQ6 =>
+      'यह क्यों जरूरी है: लगातार दर्द आमतौर पर कैंसर नहीं होता, लेकिन लंबे समय तक दर्द रहे तो जांच करानी चाहिए।';
 
   @override
   String get assessmentResultConsult => 'कृपया डॉक्टर से सलाह लें';
@@ -594,6 +633,16 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get disclaimerUnderstood => 'मैं समझ गया/गई';
+
+  @override
+  String get careIntroTitle => 'मार्गदर्शित देखभाल यहां से शुरू होती है';
+
+  @override
+  String get careIntroSubtitle =>
+      'स्तन स्वास्थ्य स्वयं-जांच गाइड शुरू करने से पहले डॉक्टर-सहायता वाला शांत परिचय।';
+
+  @override
+  String get careIntroButton => 'ऑनबोर्डिंग जारी रखें';
 
   @override
   String get onboardingSkip => 'छोड़ें';

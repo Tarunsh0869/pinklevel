@@ -4,7 +4,7 @@ import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
 import '../l10n/app_localizations.dart';
-import 'dashboard_screen.dart';
+import '../routes/app_routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -47,9 +47,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
 
   void _goToDashboard() {
     HapticFeedback.lightImpact();
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const DashboardScreen()),
-    );
+    Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
   }
 
   void _next() {

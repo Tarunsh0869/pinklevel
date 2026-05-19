@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../locale_provider.dart';
+import '../routes/app_routes.dart';
 import '../theme/app_theme.dart';
 
 /// Call this from anywhere to show the language picker bottom sheet.
@@ -130,7 +131,7 @@ class LanguageSelectionScreen extends StatelessWidget {
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.setBool('is_language_selected', true);
                   if (context.mounted) {
-                    Navigator.pushReplacementNamed(context, '/dashboard');
+                    Navigator.pushReplacementNamed(context, AppRoutes.onboarding);
                   }
                 },
                 child: const Text('Continue / आगे बढ़ें'),

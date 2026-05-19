@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remixicon/remixicon.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../theme/app_theme.dart';
+import '../routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,17 +44,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _checkAndNavigate() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isLanguageSelected = prefs.getBool('is_language_selected') ?? false;
-
     await Future.delayed(const Duration(seconds: 2));
     if (!mounted) return;
 
-    if (isLanguageSelected) {
-      Navigator.pushReplacementNamed(context, '/dashboard');
-    } else {
-      Navigator.pushReplacementNamed(context, '/language');
-    }
+    Navigator.pushReplacementNamed(context, AppRoutes.language);
   }
 
   @override

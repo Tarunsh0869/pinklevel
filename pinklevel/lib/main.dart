@@ -5,6 +5,7 @@ import 'l10n/app_localizations.dart';
 import 'locale_provider.dart';
 import 'screens/splash_screen.dart';
 import 'screens/language_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'routes/app_routes.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(),
         AppRoutes.language: (context) => const LanguageSelectionScreen(),
+        AppRoutes.onboarding: (context) => const OnboardingScreen(),
         AppRoutes.dashboard: (context) => const DashboardScreen(),
       },
     );

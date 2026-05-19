@@ -119,13 +119,13 @@ abstract class AppLocalizations {
   /// No description provided for @assessment.
   ///
   /// In en, this message translates to:
-  /// **'Self Assessment'**
+  /// **'Symptom Checklist'**
   String get assessment;
 
   /// No description provided for @guide.
   ///
   /// In en, this message translates to:
-  /// **'Guide'**
+  /// **'Guided Self-Exam'**
   String get guide;
 
   /// No description provided for @doctorVisit.
@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @startAssessment.
   ///
   /// In en, this message translates to:
-  /// **'Start Assessment'**
+  /// **'Start Checklist'**
   String get startAssessment;
 
   /// No description provided for @safetyDisclaimer.
@@ -209,13 +209,13 @@ abstract class AppLocalizations {
   /// No description provided for @dashboardAssessmentTitle.
   ///
   /// In en, this message translates to:
-  /// **'Self Assessment'**
+  /// **'Symptom Checklist'**
   String get dashboardAssessmentTitle;
 
   /// No description provided for @dashboardAssessmentSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Check your symptoms'**
+  /// **'Answer warning-sign questions'**
   String get dashboardAssessmentSubtitle;
 
   /// No description provided for @dashboardWarningTitle.
@@ -287,7 +287,7 @@ abstract class AppLocalizations {
   /// No description provided for @assessmentTitle.
   ///
   /// In en, this message translates to:
-  /// **'Self-Assessment'**
+  /// **'Symptom Checklist'**
   String get assessmentTitle;
 
   /// No description provided for @assessmentProgressLabel.
@@ -301,6 +301,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Submit'**
   String get assessmentSubmit;
+
+  /// No description provided for @assessmentNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get assessmentNext;
+
+  /// No description provided for @assessmentPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get assessmentPrevious;
+
+  /// No description provided for @assessmentAnswerAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Please answer all questions before submitting.'**
+  String get assessmentAnswerAll;
+
+  /// No description provided for @assessmentWhyThisMatters.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: This symptom helps evaluate your baseline wellness profile.'**
+  String get assessmentWhyThisMatters;
+
+  /// No description provided for @assessmentNoteQ1.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: A new lump or thickening can be an early warning sign and should be checked by a healthcare professional.'**
+  String get assessmentNoteQ1;
+
+  /// No description provided for @assessmentNoteQ2.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: A change in breast size or shape may point to tissue changes that need medical review.'**
+  String get assessmentNoteQ2;
+
+  /// No description provided for @assessmentNoteQ3.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: Dimpling, puckering, or redness can happen when breast skin or tissue is affected.'**
+  String get assessmentNoteQ3;
+
+  /// No description provided for @assessmentNoteQ4.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: Unusual nipple discharge, especially if it happens without pressing, should be discussed with a doctor.'**
+  String get assessmentNoteQ4;
+
+  /// No description provided for @assessmentNoteQ5.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: A nipple turning inward or changing direction can signal changes under the skin.'**
+  String get assessmentNoteQ5;
+
+  /// No description provided for @assessmentNoteQ6.
+  ///
+  /// In en, this message translates to:
+  /// **'Why this matters: Persistent breast or nipple pain is usually not cancer, but ongoing pain should be evaluated.'**
+  String get assessmentNoteQ6;
 
   /// No description provided for @assessmentResultConsult.
   ///
@@ -335,7 +395,7 @@ abstract class AppLocalizations {
   /// No description provided for @assessmentRetake.
   ///
   /// In en, this message translates to:
-  /// **'Retake Assessment'**
+  /// **'Retake Checklist'**
   String get assessmentRetake;
 
   /// No description provided for @assessmentYes.
@@ -1171,6 +1231,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I Understand'**
   String get disclaimerUnderstood;
+
+  /// No description provided for @careIntroTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Guided Care Starts Here'**
+  String get careIntroTitle;
+
+  /// No description provided for @careIntroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A calm doctor-supported introduction before your breast health self-exam guide.'**
+  String get careIntroSubtitle;
+
+  /// No description provided for @careIntroButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to Onboarding'**
+  String get careIntroButton;
 
   /// No description provided for @onboardingSkip.
   ///
