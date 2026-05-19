@@ -59,21 +59,18 @@ class WarningSignsScreen extends StatelessWidget {
                     color: AppTheme.textSecondary, height: 1.5),
               ),
               const SizedBox(height: 28),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: warningSigns.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
-                itemBuilder: (context, index) {
-                  final sign = warningSigns[index];
-                  return WarningSignCard(
-                    key: ValueKey(sign.title),
-                    icon: sign.icon,
-                    title: sign.title,
-                    description: sign.description,
-                  );
-                },
+              Column(
+                children: [
+                  for (var i = 0; i < warningSigns.length; i++) ...[
+                    WarningSignCard(
+                      key: ValueKey(warningSigns[i].title),
+                      icon: warningSigns[i].icon,
+                      title: warningSigns[i].title,
+                      description: warningSigns[i].description,
+                    ),
+                    if (i < warningSigns.length - 1) const SizedBox(height: 16),
+                  ]
+                ],
               ),
               const SizedBox(height: 28),
               InfoBanner(
@@ -146,18 +143,26 @@ class WarningSignCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title,
-                    style: const TextStyle(
-                        color: Color(0xFF2D2D2D),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                      color: Color(0xFF2D2D2D),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 const SizedBox(height: 6),
-                Text(description,
-                    style: const TextStyle(
-                        color: Color(0xFF6A6A6A),
-                        fontSize: 14,
-                        height: 1.45,
-                        fontWeight: FontWeight.w500)),
+                Text(
+                  description,
+                  style: const TextStyle(
+                      color: Color(0xFF6A6A6A),
+                      fontSize: 14,
+                      height: 1.45,
+                      fontWeight: FontWeight.w500),
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ),

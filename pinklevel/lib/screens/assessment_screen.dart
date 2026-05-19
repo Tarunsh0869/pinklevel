@@ -12,12 +12,22 @@ class AssessmentScreen extends StatefulWidget {
 
 class _AssessmentScreenState extends State<AssessmentScreen> {
   final Map<int, bool?> _answers = {};
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
   bool _submitted = false;
 
   void _reset() => setState(() {
         _answers.clear();
         _submitted = false;
+        _currentPage = 0;
+        _pageController.jumpToPage(0);
       });
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

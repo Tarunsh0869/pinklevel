@@ -46,72 +46,72 @@ class MythsFactsScreen extends StatelessWidget {
                     color: AppTheme.textSecondary, height: 1.5),
               ),
               const SizedBox(height: 28),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: items.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 16),
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return CustomCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppTheme.darkPink.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            l10n.mythLabel,
-                            style: TextStyle(
-                              color: AppTheme.darkPink,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
+              Column(
+                children: [
+                  for (var i = 0; i < items.length; i++) ...[
+                    CustomCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppTheme.darkPink.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              l10n.mythLabel,
+                              style: TextStyle(
+                                color: AppTheme.darkPink,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(item.myth,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(color: AppTheme.textPrimary)),
-                        const SizedBox(height: 16),
-                        const Divider(),
-                        const SizedBox(height: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppTheme.successGreen
-                                .withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            l10n.factLabel,
-                            style: TextStyle(
-                              color: AppTheme.successGreen,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
+                          const SizedBox(height: 8),
+                          Text(items[i].myth,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: AppTheme.textPrimary),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis),
+                          const SizedBox(height: 16),
+                          const Divider(),
+                          const SizedBox(height: 12),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppTheme.successGreen.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              l10n.factLabel,
+                              style: TextStyle(
+                                color: AppTheme.successGreen,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(item.fact,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
-                                    color: AppTheme.textSecondary,
-                                    height: 1.5)),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(items[i].fact,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      color: AppTheme.textSecondary,
+                                      height: 1.5),
+                              maxLines: 6,
+                              overflow: TextOverflow.ellipsis),
+                        ],
+                      ),
                     ),
-                  );
-                },
+                    if (i < items.length - 1) const SizedBox(height: 16),
+                  ]
+                ],
               ),
               const SizedBox(height: 24),
             ],

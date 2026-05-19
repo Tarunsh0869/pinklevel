@@ -18,10 +18,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get dashboard => 'डैशबोर्ड';
 
   @override
-  String get assessment => 'स्वयं जांच';
+  String get assessment => 'लक्षण चेकलिस्ट';
 
   @override
-  String get guide => 'गाइड';
+  String get guide => 'मार्गदर्शित स्वयं जांच';
 
   @override
   String get doctorVisit => 'डॉक्टर से मिलें';
@@ -39,7 +39,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get normalVsAbnormal => 'सामान्य बनाम असामान्य';
 
   @override
-  String get startAssessment => 'जांच शुरू करें';
+  String get startAssessment => 'चेकलिस्ट शुरू करें';
 
   @override
   String get safetyDisclaimer => 'सुरक्षा डिस्क्लेमर';
@@ -64,10 +64,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get dashboardQuickOptions => 'त्वरित विकल्प';
 
   @override
-  String get dashboardAssessmentTitle => 'स्वयं मूल्यांकन';
+  String get dashboardAssessmentTitle => 'लक्षण चेकलिस्ट';
 
   @override
-  String get dashboardAssessmentSubtitle => 'लक्षणों की जांच करें';
+  String get dashboardAssessmentSubtitle => 'चेतावनी संकेतों के सवालों के जवाब दें';
 
   @override
   String get dashboardWarningTitle => 'चेतावनी संकेत';
@@ -104,7 +104,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get exitAppConfirm => 'बंद करें';
 
   @override
-  String get assessmentTitle => 'स्वयं मूल्यांकन';
+  String get assessmentTitle => 'लक्षण चेकलिस्ट';
 
   @override
   String assessmentProgressLabel(int answered, int total) {
@@ -132,7 +132,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get assessmentGoHome => 'होम पर वापस जाएं';
 
   @override
-  String get assessmentRetake => 'फिर से मूल्यांकन करें';
+  String get assessmentRetake => 'चेकलिस्ट फिर से करें';
 
   @override
   String get assessmentYes => 'हाँ';

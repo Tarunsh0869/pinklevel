@@ -124,8 +124,12 @@ class DoctorVisitScreen extends StatelessWidget {
               Icon(icon, color: iconColor, size: 28),
               const SizedBox(width: 12),
               Expanded(
-                child: Text(title,
-                    style: Theme.of(context).textTheme.headlineSmall),
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
@@ -147,8 +151,12 @@ class DoctorVisitScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Text(item,
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    child: Text(
+                      item,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -200,7 +208,13 @@ class DoctorVisitScreen extends StatelessWidget {
         children: [
           Icon(icon, size: 20, color: AppTheme.primaryPink),
           const SizedBox(width: 12),
-          Text(text),
+          Expanded(
+            child: Text(
+              text,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

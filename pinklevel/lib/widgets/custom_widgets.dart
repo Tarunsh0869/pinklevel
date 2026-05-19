@@ -80,7 +80,14 @@ class PrimaryButton extends StatelessWidget {
             Icon(icon, size: 35),
             const SizedBox(width: 10),
           ],
-          Text(text),
+          Flexible(
+            child: Text(
+              text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );
@@ -118,6 +125,8 @@ class SecondaryButton extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -243,6 +252,8 @@ class WarningSignCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: AppTheme.darkPink,
                 ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8),
           Text(
@@ -250,6 +261,8 @@ class WarningSignCard extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textPrimary,
                 ),
+            maxLines: 6,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -293,6 +306,8 @@ class InfoBanner extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: textColor ?? const Color.fromARGB(255, 49, 49, 49),
                   ),
+              maxLines: 6,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

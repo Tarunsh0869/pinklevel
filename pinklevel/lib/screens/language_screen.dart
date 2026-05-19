@@ -47,9 +47,13 @@ class _LanguageSheet extends StatelessWidget {
             children: [
               Icon(Icons.language, color: AppTheme.primaryPink, size: 22),
               const SizedBox(width: 10),
-              const Text(
-                'Language / भाषा',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+              Expanded(
+                child: Text(
+                  'Language / भाषा',
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

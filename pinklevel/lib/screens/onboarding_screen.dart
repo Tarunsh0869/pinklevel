@@ -174,6 +174,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                       fontSize: screenHeight < 600 ? 22 : null,
                                     ),
                                 textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 16),
                               Text(
@@ -187,6 +189,8 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                                       fontSize: screenHeight < 600 ? 14 : null,
                                     ),
                                 textAlign: TextAlign.center,
+                                maxLines: 6,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ],
                           ),

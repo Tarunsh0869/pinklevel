@@ -62,9 +62,12 @@ class DisclaimerScreen extends StatelessWidget {
                                 size: 18, color: AppTheme.primaryPink),
                             const SizedBox(width: 10),
                             Expanded(
-                              child: Text(text,
-                                  style:
-                                      Theme.of(context).textTheme.bodyLarge),
+                              child: Text(
+                                text,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                                maxLines: 8,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),

@@ -408,6 +408,8 @@ class _ListenButton extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: isPlaying ? Colors.white : const Color(0xFFE91E63),
               ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

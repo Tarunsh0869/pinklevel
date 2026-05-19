@@ -120,6 +120,8 @@ class NormalVsAbnormalScreen extends StatelessWidget {
                         color: color,
                         fontWeight: FontWeight.w800,
                       ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -134,11 +136,15 @@ class NormalVsAbnormalScreen extends StatelessWidget {
                   Icon(Remix.arrow_right_s_line, color: color, size: 18),
                   const SizedBox(width: 4),
                   Expanded(
-                    child: Text(item,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(height: 1.4)),
+                    child: Text(
+                      item,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(height: 1.4),
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

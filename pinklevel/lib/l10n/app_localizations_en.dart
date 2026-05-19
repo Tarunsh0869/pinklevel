@@ -18,10 +18,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboard => 'Dashboard';
 
   @override
-  String get assessment => 'Self Assessment';
+  String get assessment => 'Symptom Checklist';
 
   @override
-  String get guide => 'Guide';
+  String get guide => 'Guided Self-Exam';
 
   @override
   String get doctorVisit => 'Doctor Visit';
@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get normalVsAbnormal => 'Normal vs Abnormal';
 
   @override
-  String get startAssessment => 'Start Assessment';
+  String get startAssessment => 'Start Checklist';
 
   @override
   String get safetyDisclaimer => 'Safety Disclaimer';
@@ -64,10 +64,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardQuickOptions => 'Quick Options';
 
   @override
-  String get dashboardAssessmentTitle => 'Self Assessment';
+  String get dashboardAssessmentTitle => 'Symptom Checklist';
 
   @override
-  String get dashboardAssessmentSubtitle => 'Check your symptoms';
+  String get dashboardAssessmentSubtitle => 'Answer warning-sign questions';
 
   @override
   String get dashboardWarningTitle => 'Warning Signs';
@@ -104,7 +104,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exitAppConfirm => 'Close';
 
   @override
-  String get assessmentTitle => 'Self-Assessment';
+  String get assessmentTitle => 'Symptom Checklist';
 
   @override
   String assessmentProgressLabel(int answered, int total) {
@@ -132,7 +132,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assessmentGoHome => 'Go Back to Home';
 
   @override
-  String get assessmentRetake => 'Retake Assessment';
+  String get assessmentRetake => 'Retake Checklist';
 
   @override
   String get assessmentYes => 'Yes';
