@@ -3,12 +3,23 @@ import 'package:flutter/services.dart';
 import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../l10n/app_localizations.dart';
 
 class DisclaimerScreen extends StatelessWidget {
   const DisclaimerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    final notes = [
+      l10n.disclaimerNote1,
+      l10n.disclaimerNote2,
+      l10n.disclaimerNote3,
+      l10n.disclaimerNote4,
+      l10n.disclaimerNote5,
+    ];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.primaryPink,
@@ -18,7 +29,7 @@ class DisclaimerScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Safety Disclaimer'),
+        title: Text(l10n.disclaimerPageTitle),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -26,14 +37,11 @@ class DisclaimerScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Important Disclaimer',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              Text(l10n.disclaimerHeading,
+                  style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(height: 20),
-              const InfoBanner(
-                message:
-                    'This app is for educational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment.',
+              InfoBanner(
+                message: l10n.disclaimerBanner,
                 icon: Remix.error_warning_line,
               ),
               const SizedBox(height: 24),
@@ -41,18 +49,10 @@ class DisclaimerScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Please Note:',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
+                    Text(l10n.disclaimerNoteTitle,
+                        style: Theme.of(context).textTheme.headlineSmall),
                     const SizedBox(height: 16),
-                    ...[ 
-                      'Always consult a qualified healthcare professional for medical advice.',
-                      'Self-examination does not replace regular clinical breast exams or mammograms.',
-                      'If you notice any changes, seek medical attention promptly.',
-                      'Early detection through professional screening saves lives.',
-                      'This app does not provide diagnosis or treatment recommendations.',
-                    ].map(
+                    ...notes.map(
                       (text) => Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -65,6 +65,8 @@ class DisclaimerScreen extends StatelessWidget {
                               child: Text(
                                 text,
                                 style: Theme.of(context).textTheme.bodyLarge,
+                                maxLines: 8,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -76,7 +78,7 @@ class DisclaimerScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                text: 'I Understand',
+                text: l10n.disclaimerUnderstood,
                 icon: Remix.checkbox_circle_line,
                 onPressed: () => Navigator.pop(context),
               ),

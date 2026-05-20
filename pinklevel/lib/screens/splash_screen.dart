@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
-import 'onboarding_screen.dart';
+import '../routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -40,14 +40,14 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _controller.forward();
+    _checkAndNavigate();
+  }
 
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const OnboardingScreen()),
-        );
-      }
-    });
+  Future<void> _checkAndNavigate() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+
+    Navigator.pushReplacementNamed(context, AppRoutes.language);
   }
 
   @override
@@ -111,14 +111,20 @@ class _SplashScreenState extends State<SplashScreen>
                         const SizedBox(height: 40),
                         Text(
                           'Breast Health',
-                          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(
                                 color: AppTheme.primaryPink,
                                 fontWeight: FontWeight.bold,
                               ),
                         ),
                         Text(
                           'Awareness',
-                          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(
                                 color: AppTheme.darkPink,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -129,7 +135,10 @@ class _SplashScreenState extends State<SplashScreen>
                           child: Text(
                             'Know Your Body. Protect Your Health.',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
                                   color: AppTheme.textSecondary,
                                   fontWeight: FontWeight.normal,
                                 ),

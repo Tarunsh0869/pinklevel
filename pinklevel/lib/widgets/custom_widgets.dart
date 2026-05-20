@@ -80,7 +80,14 @@ class PrimaryButton extends StatelessWidget {
             Icon(icon, size: 35),
             const SizedBox(width: 10),
           ],
-          Text(text),
+          Flexible(
+            child: Text(
+              text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );
@@ -118,6 +125,8 @@ class SecondaryButton extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w600,
         ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -146,12 +155,13 @@ class IconCard extends StatelessWidget {
     return CustomCard(
       onTap: onTap,
       elevation: elevation,
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: (iconColor ?? AppTheme.primaryPink).withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
@@ -159,10 +169,10 @@ class IconCard extends StatelessWidget {
             child: Icon(
               icon,
               color: iconColor ?? AppTheme.primaryPink,
-              size: 24,
+              size: 22,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Text(
             title,
             style: Theme.of(context).textTheme.titleMedium,
@@ -242,6 +252,8 @@ class WarningSignCard extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: AppTheme.darkPink,
                 ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
           const SizedBox(height: 8),
           Text(
@@ -249,6 +261,8 @@ class WarningSignCard extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: AppTheme.textPrimary,
                 ),
+            maxLines: 6,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
@@ -292,6 +306,8 @@ class InfoBanner extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: textColor ?? const Color.fromARGB(255, 49, 49, 49),
                   ),
+              maxLines: 6,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],

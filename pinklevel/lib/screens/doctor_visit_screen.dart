@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:remixicon/remixicon.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_widgets.dart';
+import '../l10n/app_localizations.dart';
 import 'disclaimer_screen.dart';
 
 class DoctorVisitScreen extends StatelessWidget {
@@ -10,33 +11,19 @@ class DoctorVisitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> whenToVisit = [
-      'You find a new lump or mass in your breast or underarm',
-      'You notice changes in breast size, shape, or symmetry',
-      'There is nipple discharge (especially bloody or clear)',
-      'Your nipple has turned inward or changed position',
-      'You see dimpling, puckering, or skin texture changes',
-      'There is persistent redness, rash, or swelling',
-      'You experience unexplained breast or nipple pain',
-      'You notice any other unusual or persistent changes',
-    ];
+    final l10n = AppLocalizations.of(context)!;
 
-    final List<String> whatToBring = [
-      'List of all current medications and supplements',
-      'Your medical history and previous breast imaging results',
-      'Family history of breast or ovarian cancer',
-      'List of your symptoms with dates when they started',
-      'Questions you want to ask your doctor',
-      'Insurance information and identification',
+    final whenToVisit = [
+      l10n.doctorWhen1, l10n.doctorWhen2, l10n.doctorWhen3, l10n.doctorWhen4,
+      l10n.doctorWhen5, l10n.doctorWhen6, l10n.doctorWhen7, l10n.doctorWhen8,
     ];
-
-    final List<String> questionsToAsk = [
-      'What could be causing these changes?',
-      'Do I need any tests or imaging (mammogram, ultrasound)?',
-      'What are the next steps in diagnosis or treatment?',
-      'How often should I have breast examinations?',
-      'Are there risk factors I should be aware of?',
-      'When should I schedule a follow-up appointment?',
+    final whatToBring = [
+      l10n.doctorBring1, l10n.doctorBring2, l10n.doctorBring3,
+      l10n.doctorBring4, l10n.doctorBring5, l10n.doctorBring6,
+    ];
+    final questionsToAsk = [
+      l10n.doctorAsk1, l10n.doctorAsk2, l10n.doctorAsk3,
+      l10n.doctorAsk4, l10n.doctorAsk5, l10n.doctorAsk6,
     ];
 
     return Scaffold(
@@ -48,7 +35,7 @@ class DoctorVisitScreen extends StatelessWidget {
           statusBarIconBrightness: Brightness.light,
           statusBarBrightness: Brightness.dark,
         ),
-        title: const Text('Doctor Visit Guide'),
+        title: Text(l10n.doctorVisitPageTitle),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
@@ -57,20 +44,15 @@ class DoctorVisitScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               PrimaryButton(
-                text: 'Book Doctor Appointment',
-                onPressed: () => _showBookingDialog(context),
+                text: l10n.doctorVisitBookButton,
+                onPressed: () => _showBookingDialog(context, l10n),
                 icon: Remix.calendar_check_line,
               ),
               const SizedBox(height: 12),
               SecondaryButton(
-                text: 'View Safety Disclaimer',
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const DisclaimerScreen()),
-                  );
-                },
+                text: l10n.doctorVisitDisclaimerButton,
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const DisclaimerScreen())),
               ),
             ],
           ),
@@ -82,22 +64,18 @@ class DoctorVisitScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'When to See a Doctor',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
+              Text(l10n.doctorVisitHeading,
+                  style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(height: 12),
               Text(
-                'Don\'t wait if you notice any concerning changes. Early professional evaluation is crucial.',
+                l10n.doctorVisitSubtitle,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppTheme.textSecondary,
-                      height: 1.5,
-                    ),
+                    color: AppTheme.textSecondary, height: 1.5),
               ),
               const SizedBox(height: 28),
               _buildSection(
                 context: context,
-                title: 'Schedule a Visit If:',
+                title: l10n.doctorVisitWhenTitle,
                 icon: Remix.calendar_event_line,
                 iconColor: AppTheme.primaryPink,
                 items: whenToVisit,
@@ -105,7 +83,7 @@ class DoctorVisitScreen extends StatelessWidget {
               const SizedBox(height: 24),
               _buildSection(
                 context: context,
-                title: 'What to Bring:',
+                title: l10n.doctorVisitWhatTitle,
                 icon: Remix.briefcase_line,
                 iconColor: AppTheme.successGreen,
                 items: whatToBring,
@@ -113,15 +91,14 @@ class DoctorVisitScreen extends StatelessWidget {
               const SizedBox(height: 24),
               _buildSection(
                 context: context,
-                title: 'Questions to Ask:',
+                title: l10n.doctorVisitQuestionsTitle,
                 icon: Remix.question_line,
                 iconColor: AppTheme.warningOrange,
                 items: questionsToAsk,
               ),
               const SizedBox(height: 28),
-              const InfoBanner(
-                message:
-                    'Regular checkups and professional screenings are essential, even if you feel fine. Early detection saves lives.',
+              InfoBanner(
+                message: l10n.doctorVisitBanner,
                 icon: Remix.heart_line,
               ),
             ],
@@ -146,7 +123,14 @@ class DoctorVisitScreen extends StatelessWidget {
             children: [
               Icon(icon, color: iconColor, size: 28),
               const SizedBox(width: 12),
-              Text(title, style: Theme.of(context).textTheme.headlineSmall),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 20),
@@ -167,8 +151,12 @@ class DoctorVisitScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Text(item,
-                        style: Theme.of(context).textTheme.bodyLarge),
+                    child: Text(
+                      item,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -179,36 +167,34 @@ class DoctorVisitScreen extends StatelessWidget {
     );
   }
 
-  void _showBookingDialog(BuildContext context) {
+  void _showBookingDialog(BuildContext context, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Contact Healthcare Provider'),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(l10n.doctorDialogTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'This feature would typically connect to:',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
+            Text(l10n.doctorDialogSubtitle,
+                style: const TextStyle(fontWeight: FontWeight.w600)),
             const SizedBox(height: 12),
-            _dialogOption(Remix.phone_line, 'Call your doctor'),
-            _dialogOption(Remix.global_line, 'Online booking portal'),
-            _dialogOption(Remix.message_line, 'Messaging system'),
-            _dialogOption(Remix.map_pin_line, 'Find nearby clinics'),
+            _dialogOption(Remix.phone_line, l10n.doctorDialogOption1),
+            _dialogOption(Remix.global_line, l10n.doctorDialogOption2),
+            _dialogOption(Remix.message_line, l10n.doctorDialogOption3),
+            _dialogOption(Remix.map_pin_line, l10n.doctorDialogOption4),
             const SizedBox(height: 12),
-            const Text(
-              'For now, please contact your healthcare provider directly.',
-              style: TextStyle(fontSize: 14, color: AppTheme.textSecondary),
-            ),
+            Text(l10n.doctorDialogNote,
+                style: const TextStyle(
+                    fontSize: 14, color: AppTheme.textSecondary)),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Close'),
+            child: Text(l10n.doctorDialogClose),
           ),
         ],
       ),
@@ -222,7 +208,13 @@ class DoctorVisitScreen extends StatelessWidget {
         children: [
           Icon(icon, size: 20, color: AppTheme.primaryPink),
           const SizedBox(width: 12),
-          Text(text),
+          Expanded(
+            child: Text(
+              text,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

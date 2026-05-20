@@ -4,7 +4,7 @@ import 'package:pinklevel/main.dart';
 
 void main() {
   testWidgets('App smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(const BreastCancerAwarenessApp());
+    await tester.pumpWidget(const MyApp());
 
     // Verify MaterialApp renders
     expect(find.byType(MaterialApp), findsOneWidget);
